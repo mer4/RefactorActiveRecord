@@ -109,17 +109,19 @@ class model {
             echo 'I just updated record id=' . static::$id . ' in ' . static::$tableName;
 
         }
-
     }
+
     private function insert() {
 
         $sql =  "INSERT INTO ". static::$tableName. " (" . self::$columnString . ") VALUES (" . self::$valueString . ")";
         return $sql;
     }
+
     private function update() {
         $sql = "UPDATE " . static::$tableName . " SET " . static::$updateColumn . " = '" . static::$updatedInfo . "' WHERE id=" . static::$id;
         return $sql;
     }
+
     public function delete() {
 
         $db = dbConn::getConnection();
@@ -217,9 +219,16 @@ class stringFunctions {
     }
 }
 
+class htmlTags {
+
+    static public function lineBreak() {
+        echo '<br>';
+    }
+}
+
 stringFunctions::headingOne('Select All Records');
 stringFunctions::printThis('All Accounts Records');
-echo '<br>';
+htmlTags::lineBreak();
 // this would be the method to put in the index page for accounts
 $records = accounts::findAll();
 tableFunctions::createTable($records);
@@ -228,7 +237,7 @@ stringFunctions::printThis('All Todos Records');
 $records = todos::findAll();
 //print_r($records);
 tableFunctions::createTable($records);
-echo '<br>';
+htmlTags::lineBreak();
 stringFunctions::headingOne('Select One Record');
 stringFunctions::printThis('Accounts ID=2');
 $records = accounts::findOne(2);
@@ -236,29 +245,29 @@ tableFunctions::createTable($records);
 stringFunctions::printThis('Todos ID=2');
 $records = todos::findOne(2);
 tableFunctions::createTable($records);
-echo '<br>';
+htmlTags::lineBreak();
 stringFunctions::headingOne('Insert New Record');
 stringFunctions::printThis('Todo Record Data');
-echo '<br>';
+htmlTags::lineBreak();
 $obj = new todo;
 $obj->save();
 $records = todos::findAll();
 tableFunctions::createTable($records);
-echo '<br>';
+htmlTags::lineBreak();
 stringFunctions::headingOne('Update Record');
 stringFunctions::printThis('Account ID=6 Phone');
-echo '<br>';
+htmlTags::lineBreak();
 $newobj = new account;
 $newobj->save();
 $records = accounts::findAll();
 tableFunctions::createTable($records);
 /*
-echo '<br>';
+htmlTags::lineBreak();
 $difobj = new todo;
 $difobj->delete();
 $records = todos::findAll();
 tableFunctions::createTable($records);
-echo '<br>';
+htmlTags::lineBreak();
 $othobj = new account;
 $othobj->delete();
 $records = accounts::findAll();
