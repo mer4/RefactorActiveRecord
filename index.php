@@ -19,6 +19,7 @@ class Manage {
 
 spl_autoload_register(array('Manage', 'autoload'));
 
+//file dbConn.php
 class dbConn{
     //variable to hold connection object.
     protected static $db;
@@ -46,7 +47,8 @@ class dbConn{
         return self::$db;
     }
 }
-class collection {
+//file collection.php
+abstract class collection {
     static public function create() {
         $model = new static::$modelName;
         return $model;
@@ -74,13 +76,16 @@ class collection {
         return $recordsSet;
     }
 }
-class accounts extends collection {
+//file accounts.php
+final class accounts extends collection {
     protected static $modelName = 'accounts';
 }
-class todos extends collection {
+//file todos.php
+final class todos extends collection {
     protected static $modelName = 'todos';
 }
-class model {
+//file model.php
+abstract class model {
     protected static $columnString;
     protected static $valueString;
     public function save()
@@ -118,6 +123,7 @@ class model {
     }
 
     private function update() {
+
         $sql = "UPDATE " . static::$tableName . " SET " . static::$updateColumn . " = '" . static::$updatedInfo . "' WHERE id=" . static::$id;
         return $sql;
     }
@@ -130,12 +136,12 @@ class model {
         //echo $sql;
         $statement = $db->prepare($sql);
         $statement->execute();
-
         echo 'The record with id=' . static::$id . ' has been deleted from ' . static::$tableName;
 
     }
 }
-class account extends model {
+//file account.php
+final class account extends model {
     public static $id = '6';
 
     public $email;
@@ -166,7 +172,8 @@ class account extends model {
 
     }
 }
-class todo extends model {
+//file todo.php
+final class todo extends model {
     public static $id = '';
 
     public $owneremail;
@@ -191,8 +198,8 @@ class todo extends model {
 
     }
 }
-
-class tableFunctions {
+//file tableFunctions.php
+final class tableFunctions {
 
     public static function createTable($result) {
         echo '<style>table { border-collapse: collapse; } table, tr { border: 1px solid black; }</style>';
@@ -207,8 +214,8 @@ class tableFunctions {
         echo '<table>';
     }
 }
-
-class stringFunctions {
+//file stringFunctions.php
+final class stringFunctions {
 
     static public function headingOne($text) {
         echo '<h1>' . $text . '</h1>';
@@ -218,8 +225,8 @@ class stringFunctions {
         echo '<b>' . $boldText . '</b>';
     }
 }
-
-class htmlTags {
+//file htmlTags.php
+final class htmlTags {
 
     static public function lineBreak() {
         echo '<br>';
